@@ -10,7 +10,7 @@ import json
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-def construct_prompt(work, interests, papers):
+def _construct_prompt(work: str, interests: str, papers: list) -> dict:
     return {
             "system" : f"""
                     You triage the daily arXiv announcement for a PhD student.
@@ -37,7 +37,7 @@ def construct_prompt(work, interests, papers):
                     """ + f"\n\n{len(papers)} papers were announced today:\n\n" + "\n\n".join([f"[{i}] {paper['title']}\n{paper['summary']}" for i, paper in enumerate(papers,1)])
     }
 
-def construct_request_body(prompt, temperature=0.3):
+def _construct_request_body(prompt:dict, temperature:float = 0.3) -> dict:
     return {
         "systemInstruction": {
             "parts": [{
@@ -56,13 +56,13 @@ def construct_request_body(prompt, temperature=0.3):
         }
     }
 
-def request_digest(url, api_key, papers, work, interests, temperature = 0.3) -> dict: 
+def request_digest(url:str, api_key:str, papers:list, work:str, interests:str, temperature:float = 0.3) -> dict: 
     """
     Requests a digest of today's papers from a specified LLM. 
     Returns a dictionary in the openai format with the LLM's response. 
     """
-    prompt  = construct_prompt(work,interests, papers)
-    body    = construct_request_body(prompt, temperature)
+    prompt  = _construct_prompt(work,interests, papers)
+    body    = _construct_request_body(prompt, temperature)
     request = Request(
         url,
         data = json.dumps(body).encode("utf-8"),
