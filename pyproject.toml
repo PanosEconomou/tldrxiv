@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tldrxiv"
+version = "0.0.1"
+authors = [
+    { name="Panos Oikonomou", email="panos.economou.v@gmail.com" },
+]
+description = "Generate digests for daily arXiv feeds."
+readme = "README.md"
+requires-python = ">=3.11" # it uses tomllib
+dependencies = []
+licence = "MIT"
+license-files = ["LICEN[CS]E*"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+]
+
+[project.scripts]
+tldrxiv = "tldrxiv.cli:main"
