@@ -33,6 +33,15 @@ _DEFAULTS = {
         },
 }
 
+def _update(base:dict, update:dict) -> dict:
+    output = dict(base)
+
+    for key, value in update.items():
+        if isinstance(key, dict) and isinstance(output.get(key), dict):
+            output[key] = _update(output[key], value)
+        else: output[key] = value
+    return output
+
 def _find_config_path(cli_path: Path | None) -> Path | None:
     if cli_path is not None: 
         if cli_path.is_file(): 
@@ -43,7 +52,7 @@ def _parse_config_file(cfg:dict, path:Path) -> dict:
     try:
         with open(path, "rb") as file:
             local_cfg = tomllib.load(file)
-        cfg.update(local_cfg)
+        cfg = _update(cfg, local_cfg)
     except tomllib.TOMLDecodeError as error:
         print(f"Failed to parse config file {path}. Using Default config.")
         print(error)
@@ -59,6 +68,6 @@ def load(cli:dict) -> dict:
     cfg     = _DEFAULTS.copy()
     path    = _find_config_path(cli["config_file"])
     if path is not None: cfg = _parse_config_file(cfg, path)
-    cfg.update(cli)
-        
+    cfg     = _update(cfg, cli)
+
     return cfg
