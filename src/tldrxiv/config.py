@@ -29,8 +29,8 @@ _DEFAULTS = {
         },
 
     "research"  : {
-        "work"                  : "Generalized symmetry in particular through the lens of 2D CFTs. Interest in Conformal Defects and boundaries as a probe for studying RG flows as well as the mathematical structure of generalized symmetry.",
-        "research_interests"    : "Generalized Symmetry as a method for understanding both the mathematical structure of QFT as well as obtaining new kinematical results in specific contenxts. Also some interest in lattices and condensed matter applications of generalized symmetry. Always on the lookout for where generalized symmetry ideas but not necessarily techniques or formalism can be applied in novel areas."
+        "work"      : "Generalized symmetry in particular through the lens of 2D CFTs. Interest in Conformal Defects and boundaries as a probe for studying RG flows as well as the mathematical structure of generalized symmetry.",
+        "interests" : "Generalized Symmetry as a method for understanding both the mathematical structure of QFT as well as obtaining new kinematical results in specific contenxts. Also some interest in lattices and condensed matter applications of generalized symmetry. Always on the lookout for where generalized symmetry ideas but not necessarily techniques or formalism can be applied in novel areas."
         },
 }
 
@@ -61,7 +61,7 @@ def _parse_config_file(cfg:dict, path:Path) -> dict:
         print(f"Cannot read config file {path}. Using Default config.")
     return cfg
 
-def load(cli:dict) -> dict:
+def load(cli:dict = { "config_file" : Path("") }) -> dict:
     """
     Parses the config file and overrides any arguments from the cli
     """
@@ -69,6 +69,7 @@ def load(cli:dict) -> dict:
     cfg     = _DEFAULTS.copy()
     path    = _find_config_path(cli["config_file"])
     if path is not None: cfg = _parse_config_file(cfg, path)
-    cfg     = _update(cfg, cli["config"])
+    if "config" in cli:
+        cfg = _update(cfg, cli["config"])
 
     return cfg

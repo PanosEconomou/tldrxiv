@@ -7,7 +7,7 @@
 # ------------------------- #
 
 from re         import compile
-from json       import loads, dumps
+from json       import JSONDecodeError, loads, dumps
 
 from .          import paths
 
@@ -58,6 +58,23 @@ def save_digest(answer:dict, day:str) -> bool:
     """
     output = paths.ensure_parent(paths.digest_file(day))
     return output.write_text(dumps(answer, ensure_ascii = False), encoding = "utf-8") > 0
+
+def parse_digest(day:str) -> dict | None:
+    """
+    Looks for a digest fort this day and if so it loads it.
+    """
+    if not paths.digest_file(day).is_file():
+        return None
+
+    try:
+        raw = paths.digest_file(day).read_text(encoding = "utf-8")
+        data = loads(raw)
+    except OSError as error:
+        raise RuntimeError(f"{paths.digest_file(day)} cannot be read - {error.strerror}") from error
+    except JSONDecodeError as error:
+        raise RuntimeError(f"Corrupt JSON File at {paths.digest_file(day)} at line {error.lineno} and column {error.colno}") from error
+
+    return data
 
 def cleanup(max_entries:int) -> None:
     """

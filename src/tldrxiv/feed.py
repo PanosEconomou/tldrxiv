@@ -95,14 +95,14 @@ def parse(path:Path, types:list[str] = []) -> list[dict]:
 
     for entry in root.findall("atom:entry", SCHEMAS):
         summary_raw = entry.findtext("atom:summary", "", SCHEMAS) or ""
-        kind        = entry.findtext("atom:announce_type", "", SCHEMAS) or ""
+        kind        = entry.findtext("arxiv:announce_type", "", SCHEMAS) or ""
         if wanted and kind not in wanted:
             continue
         
         papers.append({
             "arxiv_id"  : entry.findtext("atom:id", "", SCHEMAS).replace("oai:arXiv.org:", ""),
             "title"     : entry.findtext("atom:title", "", SCHEMAS),
-            "summmary"  : split(r"Abstract:\s*", summary_raw, maxsplit = 1)[-1]
+            "summary"  : split(r"Abstract:\s*", summary_raw, maxsplit = 1)[-1]
         })
     return papers
 
