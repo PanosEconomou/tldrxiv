@@ -12,8 +12,9 @@ from pathlib import Path
 
 _DEFAULTS = {
     "arxiv"     : {
-            "feeds" : ["hep-th"],
-            "type"  : ["new", "cross"],
+        "feeds"     : ["hep-th"],
+        "type"      : ["new", "cross"],
+        "timeout"   : 60,
         },
 
     "storage"   : {
@@ -68,6 +69,6 @@ def load(cli:dict) -> dict:
     cfg     = _DEFAULTS.copy()
     path    = _find_config_path(cli["config_file"])
     if path is not None: cfg = _parse_config_file(cfg, path)
-    cfg     = _update(cfg, cli)
+    cfg     = _update(cfg, cli["config"])
 
     return cfg
