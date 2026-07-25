@@ -1,0 +1,101 @@
+# ----------------------------------------------------- #
+#  ┓ ┓  ┏┓┏┓•                                           #
+# ╋┃┏┫┏┓ ┃┃ ┓┓┏                                         #
+# ┗┗┗┻┛ ┗┛┗┛┗┗┛                                         #
+#                                                       # 
+# Default Configuration File                            #
+#                                                       # 
+# I commented out a bunch of the options because I      # 
+# often have terrible terminology. Hope this works! :>  # 
+#                                                       # 
+# Location: $XDG_CONFIG_HOME/tldrxiv/config.toml or     #
+#           .config/tldrxiv/config.toml                 #
+#                                                       # 
+# Config Version 0.1.0                                  # 
+# ----------------------------------------------------- #
+
+# ----------------------------------------------------- #
+# Enter your research interests to tailor the summary   #
+# to you                                                #
+# ----------------------------------------------------- #
+
+[research]
+work = """
+This is the default description of your work. A couple
+of sentences should suffice. Please replace this.
+"""
+interests = """
+A small paragraph where you describe your research
+interests perhaps beyond your current active projects.
+It is supposed to be a more general interest than what
+is directly relevant to you.
+"""
+
+# ----------------------------------------------------- #
+# Some settings to specify what arxiv feeds you want    #
+# to follow etc.                                        #
+# ----------------------------------------------------- #
+
+[arxiv]
+# If you only want one feed please till keep it as a list
+feeds = [ "hep-th", "math-ph", "cond-mat.str-el" ]
+
+# What type of submissions to look at?
+# Do you really want to look at replacement submissions?
+types = [ "new", "cross" ]
+
+# The maximum amount of time to wait for arXiv to send 
+# you the feeds
+timeout = 60 # s
+
+# ----------------------------------------------------- #
+# Set up the LLM you want to use to provide you with    #
+# the daily arXiv digests. The default is Gemini.       #
+# ----------------------------------------------------- #
+
+[llm]
+# Leave blank if you want to load it as an environment
+# variable. By default tldrXiv looks at $TLDRXIV_LLM_KEY
+# 
+# For Gemini you can get yours for free from: 
+# https://aistudio.google.com/apikey
+api_key = ""
+
+# The temperature of the LLM that generates the digest.
+# Honestly I don't really understand how it affects
+# things, but testing showed 0.5 - 0.8 is a good range.
+temperature = 0.7
+
+# The actual link to request stuff from the LLM
+# This one requests from gemini-3.6-flash, but you can
+# Find more links in 
+url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent"
+
+# ----------------------------------------------------- #
+# Storage settings. tldrXiv stores some files in your   #
+# computer. Control how many here. By default they are  #
+# stored in $XDG_DATA_HOME/tldrxiv and                  #
+# $XDG_CACHED_HOME/tldrxiv                              #
+# ----------------------------------------------------- #
+
+[storage]
+# Each day the arxiv feed is downloaded in cahce in order
+# to process it. This is the max number of days before
+# the feeds get deleted.
+daily_arxiv = 5
+
+# The full response from the LLM is stored as a json file
+# in $XDG_DATA_HOME/tldrxiv. This is the max number of
+# days before responses get deleted.
+daily_digest = 60
+
+# ----------------------------------------------------- #
+# Credits                                               #
+# ----------------------------------------------------- #
+
+[credits]
+created_by  = "Panos Oikonomou"
+repository  = "https://github.com/PanosEconomou/tldrxiv"
+version     = "0.1.0"
+licence     = "MIT"
+licence_url = "https://github.com/PanosEconomou/tldrxiv/blob/main/LICENCE"
