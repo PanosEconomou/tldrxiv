@@ -86,7 +86,7 @@ def load(cli:dict = { "config_file" : Path("") }) -> dict:
     Parses the config file and overrides any arguments from the cli
     """
 
-    cfg     = DEFAULTS.copy()
+    cfg     = _update({}, DEFAULTS)
     path    = _find_config_path(cli["config_file"])
     if path is not None: 
         cfg = _parse_config_file(cfg, path)
