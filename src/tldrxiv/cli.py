@@ -7,11 +7,41 @@
 # ------------------------- #
 
 import argparse
-from datetime import date
-from argparse import ArgumentParser
+from datetime import date, timedelta
+from argparse import ArgumentParser, ArgumentTypeError
 from pathlib  import Path
 
 from . import feed, paths, config, llm, render
+
+_LOGO = """
+ ┓ ┓  ┏┓┏┓•  
+╋┃┏┫┏┓ ┃┃ ┓┓┏
+┗┗┗┻┛ ┗┛┗┛┗┗┛
+"""
+
+_DATE_KEYWORDS = {
+    "today"     : 0, 
+    "t"         : 0,
+    "yesterday" : 1,
+    "y"         : 1,
+    "yy"        : 2,
+    "yyy"       : 3,
+}
+
+def _day(text: str) -> date:
+    stripped = text.strip().lower()
+    if stripped in _DATE_KEYWORDS:
+        return date.today() - timedelta(days=_DATE_KEYWORDS[stripped])
+
+    if stripped.startswith("-") and stripped[1:].isdigit():
+        return date.today() - timedelta(days=int(stripped[1:]))
+
+    try:
+        return date.fromisoformat(stripped)
+
+    except ValueError:
+        raise ArgumentTypeError(f"{text!r} is not a date. Use 'today', 'yesterday', '-N' for N days ago, or an ISO date like {date.today().isoformat()}")
+
 
 def _build_parser() -> ArgumentParser:
     parser = ArgumentParser(
@@ -19,6 +49,14 @@ def _build_parser() -> ArgumentParser:
         description = "Digest today's arxiv feed based on your interests!",
         epilog      = "Thanks for using %(prog)s! :>"
     )
+
+    parser.add_argument("date",
+                        nargs="?",
+                        type=_day,
+                        default=date.today(),
+                        metavar="DATE",
+                        help="Which day's digest: today, yesterday, -N, or YYYY-MM-DD"
+                        )
 
     arxiv       = parser.add_argument_group("arXiv settings")
     arxiv.add_argument("-F", "--feeds", 
@@ -73,6 +111,12 @@ def _build_parser() -> ArgumentParser:
                         help="Force a fresh download of the arxiv feed and llm digest"
                         )
 
+    system.add_argument("-n", "--no-logo", 
+                        action="store_false",
+                        dest="logo",
+                        help="Skip showing the logo in the output"
+                        )
+
     llm         = parser.add_argument_group("llm settings")
     llm.add_argument("-k", "--key", "--api-key", 
                      type=str, 
@@ -92,7 +136,7 @@ def _build_parser() -> ArgumentParser:
                      type=float, 
                      dest="temperature",
                      default=argparse.SUPPRESS,
-                     metavar="temp",
+                     metavar="TEMP",
                      help="Temperature of model"
                      )
 
@@ -141,6 +185,8 @@ def _parse_args(argv) -> dict:
 
     cli = {
         "force": args.force,
+        "date": args.date,
+        "logo": args.logo,
         "config_file": args.config,
         "config": _cli_overrides(args)
     }
@@ -152,17 +198,19 @@ def main(argv: list[str] | None = None) -> int:
     cli = _parse_args(argv)
     cfg = config.load(cli)
 
-    feed.download(cfg["arxiv"]["feeds"], force=cli["force"], timeout=cfg["arxiv"]["timeout"])
-    papers = feed.parse(paths.feed_file(date.today().isoformat()), types=cfg["arxiv"]["types"])
+    if cli["date"] == date.today():
+        feed.download(cfg["arxiv"]["feeds"], force=cli["force"], timeout=cfg["arxiv"]["timeout"])
+    papers = feed.parse(paths.feed_file(cli["date"].isoformat()), types=cfg["arxiv"]["types"])
     feed.cleanup(cfg["storage"]["daily_arxiv"])
 
-    answer = render.parse_digest(date.today().isoformat())
+    answer = render.parse_digest(cli["date"].isoformat())
     if answer is None or cli["force"]:
-        payload = llm.request_digest(cfg["llm"]["url"], cfg["llm"]["api_key"], papers, cfg["research"]["work"], cfg["research"]["interests"])
+        payload = llm.request_digest(cfg["llm"]["url"], cfg["llm"]["api_key"], papers, cfg["research"]["work"], cfg["research"]["interests"], cfg["llm"]["temperature"])
         answer = render.extract_answer(payload,papers)
-        render.save_digest(answer, date.today().isoformat())
+        render.save_digest(answer, cli["date"].isoformat())
 
     render.cleanup(cfg["storage"]["daily_digest"])
 
+    if cli["logo"]: print(_LOGO)
     print(answer["formatted"]) 
     return 0

@@ -18,7 +18,7 @@ DEFAULTS = {
         },
 
     "storage"   : {
-        "daily_arxiv"   : 1,
+        "daily_arxiv"   : 5,
         "daily_digest"  : 60,
         },
 
@@ -38,7 +38,7 @@ def _update(base:dict, update:dict) -> dict:
     output = dict(base)
 
     for key, value in update.items():
-        if isinstance(key, dict) and isinstance(output.get(key), dict):
+        if isinstance(value, dict) and isinstance(output.get(key), dict):
             output[key] = _update(output[key], value)
         else: output[key] = value
     return output
