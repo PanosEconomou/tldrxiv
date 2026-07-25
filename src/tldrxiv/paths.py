@@ -7,7 +7,7 @@
 # ------------------------- #
 
 import os
-from pathlib import Path
+from pathlib                import Path
 
 NAME = "tldrxiv"
 
@@ -38,12 +38,18 @@ def data_dir() -> Path:
     """
     return _base("XDG_DATA_HOME", ".local/share") / "digests"
 
+def source_dir() -> Path:
+    return Path(__file__).parent
+
 # ------------------------- #
 # SPECIFIC FILES            # 
 # ------------------------- #
 
 def config_file() -> Path: 
     return config_dir() / "config.toml"
+
+def default_config_file() -> Path: 
+    return source_dir() / "data" / "config.toml"
 
 def feed_file(day:str) -> Path:
     return cache_dir() / f"feed-{day}.xml"

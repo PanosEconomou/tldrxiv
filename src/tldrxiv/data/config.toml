@@ -54,11 +54,16 @@ timeout = 60 # s
 # ----------------------------------------------------- #
 
 [llm]
-# Leave blank if you want to load it as an environment
-# variable. By default tldrXiv looks at $TLDRXIV_LLM_KEY
-# 
-# For Gemini you can get yours for free from: 
-# https://aistudio.google.com/apikey
+# Leave blank if you want to load it by setting it as the 
+# $TLDRXIV_LLM_KEY environment variable. If you want to
+# use your own simply write it in quotes
+# (e.g "$GEMINI_API_KEY")
+#
+# Alternatively you can paste your key directly in 
+# quotes. But then don't put it anywhere online!
+#
+# For Gemini you can get a key for the for free tier 
+# from: https://aistudio.google.com/apikey
 api_key = ""
 
 # The temperature of the LLM that generates the digest.
