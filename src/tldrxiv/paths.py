@@ -34,9 +34,9 @@ def cache_dir() -> Path:
 
 def data_dir() -> Path:
     f"""
-    default: ~/.local/share/{NAME}
+    default: ~/.local/share/{NAME}/digests
     """
-    return _base("XDG_DATA_HOME", ".local/share")
+    return _base("XDG_DATA_HOME", ".local/share") / "digests"
 
 # ------------------------- #
 # SPECIFIC FILES            # 
@@ -49,7 +49,7 @@ def feed_file(day:str) -> Path:
     return cache_dir() / f"feed-{day}.xml"
 
 def digest_file(day:str) -> Path:
-    return data_dir() / "digests" / f"{day}.json"
+    return data_dir() / f"{day}.json"
 
 # ------------------------- #
 # DEBUG FEATURES            # 

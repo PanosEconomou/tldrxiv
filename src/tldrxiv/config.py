@@ -10,10 +10,10 @@ import os
 import tomllib
 from pathlib import Path
 
-_DEFAULTS = {
+DEFAULTS = {
     "arxiv"     : {
         "feeds"     : ["hep-th"],
-        "type"      : ["new", "cross"],
+        "types"     : ["new", "cross"],
         "timeout"   : 60,
         },
 
@@ -66,7 +66,7 @@ def load(cli:dict = { "config_file" : Path("") }) -> dict:
     Parses the config file and overrides any arguments from the cli
     """
 
-    cfg     = _DEFAULTS.copy()
+    cfg     = DEFAULTS.copy()
     path    = _find_config_path(cli["config_file"])
     if path is not None: cfg = _parse_config_file(cfg, path)
     if "config" in cli:
