@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="367" height="156" viewBox="0 0 367 156" role="img" aria-label="tldrxiv">
+  <style>
+    text {
+      font-family: ui-monospace, "SF Mono", "DejaVu Sans Mono", "Liberation Mono", Menlo, Consolas, monospace;
+      font-size: 44px;
+      fill: #24292f;
+      white-space: pre;
+    }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; }
+    }
+  </style>
+  <text x="12" y="46.3" xml:space="preserve"> ┓ ┓  ┏┓┏┓•</text>
+  <text x="12" y="90.3" xml:space="preserve">╋┃┏┫┏┓ ┃┃ ┓┓┏</text>
+  <text x="12" y="134.3" xml:space="preserve">┗┗┗┻┛ ┗┛┗┛┗┗┛</text>
+</svg>
