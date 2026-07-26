@@ -225,6 +225,8 @@ A lot of open source stuff was used in this so here are some credits!
  - [Reading TOML in Python](https://realpython.com/python-toml/)
  - [Argument Parsing](https://realpython.com/command-line-interfaces-python-argparse/)
  - [Gemini API and its Keys](https://ai.google.dev/gemini-api/docs/api-key)
+ - [Nix Packaging python files](https://nixos.org/manual/nixpkgs/stable/#chap-quick-start)
+ - [The arxiv colors I took from Mathew's cool project!](https://github.com/mathewphilipc/classic-arxiv-red)
  - [The logo is an ascii font](https://patorjk.com/software/taag/#p=display&f=Tmplr&t=tldrXiv&x=none)
 
 ---
