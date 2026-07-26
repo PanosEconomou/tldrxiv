@@ -1,16 +1,16 @@
 <div align="center">
  <div>
-  <img src="docs/banner.svg" alt="tldrXiv"/>
+  <img src="https://raw.githubusercontent.com/PanosEconomou/tldrxiv/main/docs/banner.svg" alt="tldrXiv"/>
  </div>
  <div>
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&pause=1000&repeat=false&color=B31B1B&center=true&width=435&lines=a+morning+coffee+companion" alt="a morning coffee companion"/>
  </div>
- <div>
-  <img src="https://img.shields.io/pypi/v/tldrxiv?style=flat-square&color=B31B1B"                       href ="https://pypi.org/project/tldrxiv/" alt="PyPi"/>
-  <img src="https://img.shields.io/pypi/pyversions/tldrxiv?style=flat-square&color=B31B1B"              href ="https://pypi.org/project/tldrxiv/" alt="Python"/>
-  <img src="https://img.shields.io/github/license/PanosEconomou/tldrxiv?style=flat-square&color=B31B1B" href ="LICENCE"                           alt="License"/>
-  <img src="https://img.shields.io/badge/dependencies-none-B31B1B?style=flat-square"                    href ="pyproject.toml"                    alt="Depndencies"/>
- </div>
+ <p>
+  <a href="https://pypi.org/project/tldrxiv/"><img src="https://img.shields.io/pypi/v/tldrxiv?style=flat-square&color=B31B1B" alt="PyPI"/></a>
+  <a href="https://pypi.org/project/tldrxiv/"><img src="https://img.shields.io/pypi/pyversions/tldrxiv?style=flat-square&color=B31B1B" alt="Python"/></a>
+  <a href="https://github.com/PanosEconomou/tldrxiv/blob/main/LICENCE"><img src="https://img.shields.io/github/license/PanosEconomou/tldrxiv?style=flat-square&color=B31B1B" alt="License"/></a>
+  <a href="https://github.com/PanosEconomou/tldrxiv/blob/main/pyproject.toml"><img src="https://img.shields.io/badge/dependencies-none-B31B1B?style=flat-square" alt="Dependencies"/></a>
+ </p>
 </div>
 
 > Reading 30-60 abstracts a day can be tiring! So why not have your computer work for it while you're sipping your morning coffee?
@@ -18,14 +18,14 @@
 **tldrXiv** is a *free* terminal utility that fetches today's [arXiv](https://arxiv.org/) feeds and provides you with a summary related to **your research interests**, drawing connections, and highlighting interesting articles. Here it is!
 
  <div align="center">
-  <img src="docs/demo.gif" alt="tldrxiv demo" width="800">
+  <img src="https://raw.githubusercontent.com/PanosEconomou/tldrxiv/main/docs/demo.gif" alt="tldrxiv demo" width="800"/>
 </div>
 
 ## Install
 ```sh
 pipx install tldrxiv
 ```
-`pipx` is for CLI tools and will build it in its own environment, but standard `pip install tlrdrxiv` works too.
+`pipx` is for CLI tools and will build it in its own environment, but standard `pip install tldrxiv` works too.
 
 <details><summary>From Source</summary>
  
@@ -64,8 +64,33 @@ tldrxiv -F hep-th math-ph   # overrides the arXiv feeds specified in the config
 ```
 Run `tldrxiv --help` for the complete list of options.
 
+## How it works
+```mermaid
+stateDiagram-v2 
+    direction LR
+    fetch : fetch arXiv feed
+    cache : cache
+    llm   : LLM 
+    json  : processed digest
+    data  : data dir
+    md    : terminal markdown
+    [*] --> fetch
+    fetch --> llm
+    fetch --> cache
+    cache --> json
+    llm --> json
+    json --> data
+    json --> md
+    md --> [*]
+```
+
+The metadata (i.e. abstracts and titles) of today's arXiv announcement's are requested via ATOM and stored in `$XDG_CACHE_HOME/tldrxiv`. Then they are filtered according to the preferences set in the config file, and a single query is formed which is then submitted to the LLM (in this case the free tier of Gemini 3.6 flash). The response is then parsed, stored in `$SDG_DATA_HOME/tldrxiv`, and displayed. 
+
+> [!NOTE]
+> The individual article URLs and arXiv identifiers are removed before sending to the LLM, and are reintroduced once the response is received to make sure that the ai doesn't make them up (still always check them). The LLM only has access to titles and abstracts.  
+
 ## Configuration
-The config file lives in `XDG_CONFIG_HOME/tldrxiv/config.toml` (usually `~/.config/tldrxiv/config.toml`). You can also open with `tldrxiv config`.
+The config file lives in `$XDG_CONFIG_HOME/tldrxiv/config.toml` (usually `~/.config/tldrxiv/config.toml`). You can also open with `tldrxiv config`.
 
 > [!TIP]
 > Leave `api_key = ""` in the file and `export TLDRXIV_LLM_KEY` with your API Key instead. That way your config file has no secret in it and is safe to accidentally commit without someone stealing it.
@@ -157,7 +182,7 @@ url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:
 # Storage settings. tldrXiv stores some files in your   #
 # computer. Control how many here. By default they are  #
 # stored in $XDG_DATA_HOME/tldrxiv and                  #
-# $XDG_CACHED_HOME/tldrxiv                              #
+# $XDG_CACHE_HOME/tldrxiv                               #
 # ----------------------------------------------------- #
 
 [storage]
@@ -177,11 +202,11 @@ daily_digest = 60
 ## Limitations and (hopefully) future plans
 
 Here are some things worth knowing.
-- **`tldrxiv` can only see today's scientific papers, and only abstracts.** I wouldn't be able to run in the free tier if all the references and body of the preprints was fed to gemini. More importnatly it **only uses arXiv RSS feeds** which under a Public Domain declaration and can be redistributed without attribution while the actual content of the preprints is untouched from the eyes of big tech. I *do not* have plans to extend this tool to use any preprint content to produce a digest.
+- **`tldrxiv` can only see today's scientific papers, and only abstracts.** I wouldn't be able to run in the free tier if all the references and body of the preprints was fed to gemini. More importantly it **only uses arXiv RSS feeds** which strictly contain metadata under a Public Domain declaration and can be redistributed without attribution while the actual content of the preprints is untouched from the eyes of big tech. I *do not* have plans to extend this tool to use any preprint content to produce a digest.
 - **Your work and research paragraphs are fed to Gemini.** Be careful what you disclose in the work and research paragraphs. At the free tier Gemini is using the data to train the model, so don't write stuff that you wouldn't want it to be trained with.
 - **Past days can't be generated.** Arxiv RSS feeds only exist for today. This means that if you want to process a digest from a different day you should've already downloaded the RSS feed for that day.
 - **It runs on a free API tier.** Expect some `503: Resource is Busy` errors when using this on occasion.
-- **FTLOG please don't use this as a substitue for actually reading the arXiv.** I made this only because when I have to ready 50 abstracts in the morning before my coffee kicks in I am usually half asleep by the 10th. This tool is meant to highlight what to look out for while browsing, not to substitute the reading.
+- **FTLOG please don't use this as a substitute for actually reading the arXiv.** I made this only because when I have to read 50 abstracts in the morning before my coffee kicks in I am usually half asleep by the 10th. This tool is meant to highlight what to look out for while browsing, not to substitute the reading.
 
 ## Contributing
 
@@ -189,8 +214,8 @@ Please help.
 
 ## Credits
 
-A lot of open source stuff were used in this so here are some credits!
- - Thank you to [arXiv](https://arxiv.org/) for use of its open access interoperability.
+A lot of open source stuff was used in this so here are some credits!
+ - Thank you to [arXiv](https://arxiv.org/) for use of its open access interoperability. This project is by no means affiliated with arXiv. I am just a fan!
  - [Python Packaging Guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
  - [The Hitchiker's Guide to Python/Packaging](https://docs.python-guide.org/writing/structure/)
  - [Regex Patterns in Python](https://docs.python.org/3/howto/regex.html)
