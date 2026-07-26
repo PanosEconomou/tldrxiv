@@ -21,20 +21,20 @@ def _base(env_var:str, fallback:str) -> Path:
 # ------------------------- #
 
 def config_dir() -> Path:
-    f"""
-    default: ~/.config/{NAME}
+    """
+    default: ~/.config/tldrxiv
     """
     return _base("XDG_CONFIG_HOME", ".config")
 
 def cache_dir() -> Path:
-    f"""
-    default: ~/.cache/{NAME}
+    """
+    default: ~/.cache/tldrxiv
     """
     return _base("XDG_CACHE_HOME", ".cache")
 
 def data_dir() -> Path:
-    f"""
-    default: ~/.local/share/{NAME}/digests
+    """
+    default: ~/.local/share/tldrxiv/digests
     """
     return _base("XDG_DATA_HOME", ".local/share") / "digests"
 

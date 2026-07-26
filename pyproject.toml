@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
+dynamic = ["version"]
 name = "tldrxiv"
-version = "0.0.1"
 authors = [
     { name="Panos Oikonomou", email="panos.economou.v@gmail.com" },
 ]
@@ -12,7 +12,7 @@ description = "Generate digests for daily arXiv feeds."
 readme = "README.md"
 requires-python = ">=3.11" # it uses tomllib
 dependencies = []
-licence = "MIT"
+license = "MIT"
 license-files = ["LICEN[CS]E*"]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -20,5 +20,19 @@ classifiers = [
     "Development Status :: 3 - Alpha",
 ]
 
+[project.urls]
+Homepage = "https://github.com/PanosEconomou/tldrxiv"
+Repository = "https://github.com/PanosEconomou/tldrxiv"
+Issues = "https://github.com/PanosEconomou/tldrxiv/issues"
+
 [project.scripts]
 tldrxiv = "tldrxiv.cli:main"
+
+[tool.hatch.version]
+path = "src/tldrxiv/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["src/tldrxiv", "README.md", "LICENCE", "pyproject.toml"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tldrxiv"]
