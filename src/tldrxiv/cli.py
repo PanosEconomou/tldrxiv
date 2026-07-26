@@ -214,8 +214,8 @@ def _parse_args(argv) -> dict:
 
     return cli
 
-def _write_output(cli:dict, answer:dict) -> None:
-    output_str = ((_LOGO + "\n") if cli["logo"] else "") + answer["formatted"]
+def _write_output(cli:dict, cfg:dict, answer:dict) -> None:
+    output_str = ((_LOGO ) if cli["logo"] else "") + " ".join(cfg["arxiv"]["feeds"]) +"\n\n" + answer["formatted"]
     if "output" in cli:
         try:
             cli["output"].parent.mkdir(parents = True, exist_ok = True)
@@ -315,6 +315,6 @@ def main(argv: list[str] | None = None) -> int:
     if cli["verbose"]:
         pprint(cli)
         pprint(cfg)
-    _write_output(cli, answer)
+    _write_output(cli, cfg, answer)
 
     return 0

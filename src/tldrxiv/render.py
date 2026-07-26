@@ -46,7 +46,11 @@ def extract_answer(payload:dict, papers:list[dict]) -> dict:
     """
     answer                  = loads(payload["candidates"][0]["content"]['parts'][0]['text'])
     answer["digest"]        = _linkify(answer["digest"], papers)
-    answer["formatted"]     = "\n\n".join([answer["digest"], _listify(answer["worth_opening"], papers)])
+    answer["formatted"]     = "\n\n".join(
+        [answer["digest"], 
+         "Worth Opening:" if len(answer["worth_opening"]) > 0 else "Just a casual day!",
+         _listify(answer["worth_opening"], papers)
+         ])
     answer["worth_opening"] = _idfy(answer["worth_opening"], papers)
 
     return answer
