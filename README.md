@@ -15,11 +15,14 @@
 
 > Reading 30-60 abstracts a day can be tiring! So why not have your computer work for it while you're sipping your morning coffee?
 
-**tldrXiv** is a *free* terminal utility that fetches today's [arXiv](https://arxiv.org/) feeds and provides you with a summary related to **your research interests**, drawing connections, and highlighting interesting articles. Here it is!
+**tldrXiv** is a *free* terminal utility that fetches today's [arXiv](https://arxiv.org/) feeds and provides you with a summary related to **your research interests** while highlighting interesting articles. Here it is!
 
  <div align="center">
   <img src="https://raw.githubusercontent.com/PanosEconomou/tldrxiv/main/docs/demo.gif" alt="tldrxiv demo" width="800"/>
 </div>
+
+> [!IMPORTANT]
+> This tool is not meant as a replacement for reading the arXiv! Read more [here](#limitations).
 
 ## Install
 ```sh
@@ -199,7 +202,7 @@ daily_digest = 60
  
 </details>
 
-## Limitations and (hopefully) future plans
+## Limitations
 
 Here are some things worth knowing.
 - **`tldrxiv` can only see today's scientific papers, and only abstracts.** I wouldn't be able to run in the free tier if all the references and body of the preprints was fed to gemini. More importantly it **only uses arXiv RSS feeds** which strictly contain metadata under a Public Domain declaration and can be redistributed without attribution while the actual content of the preprints is untouched from the eyes of big tech. I *do not* have plans to extend this tool to use any preprint content to produce a digest.
