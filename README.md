@@ -1,9 +1,14 @@
+<div align="center">
+
 ![banner](docs/banner.svg)
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&pause=1000&color=B31B1B&center=true&width=435&lines=A+morning+coffee+companion)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&pause=1000&repeat=false&color=B31B1B&center=true&width=435&lines=a+morning+coffee+companion)](https://git.io/typing-svg)
 
-[![PyPI](https://img.shields.io/pypi/v/tldrxiv?style=flat-square&color=B31B1B)](https://pypi.org/project/tldrxiv/)[![Python](https://img.shields.io/pypi/pyversions/tldrxiv?style=flat-square&color=B31B1B)](https://pypi.org/project/tldrxiv/)[![License](https://img.shields.io/github/license/PanosEconomou/tldrxiv?style=flat-square&color=B31B1B)](LICENCE)[![Dependencies](https://img.shields.io/badge/dependencies-none-B31B1B?style=flat-square)](pyproject.toml)![Version](https://img.shields.io/badge/dynamic/toml?url=https%3A//raw.githubusercontent.com/PanosEconomou/tldrxiv/main/pyproject.toml&query=%24.project.version&label=version&style=flat-square&color=B31B1B)
-
+[![PyPI](https://img.shields.io/pypi/v/tldrxiv?style=flat-square&color=B31B1B)](https://pypi.org/project/tldrxiv/)
+[![Python](https://img.shields.io/pypi/pyversions/tldrxiv?style=flat-square&color=B31B1B)](https://pypi.org/project/tldrxiv/)
+[![License](https://img.shields.io/github/license/PanosEconomou/tldrxiv?style=flat-square&color=B31B1B)](LICENCE)
+[![Dependencies](https://img.shields.io/badge/dependencies-none-B31B1B?style=flat-square)](pyproject.toml)
+</div>
 Reading 30-60 abstracts a day can be tiring! So why not have your computer work for it while you're sipping your morning coffee?
 
 **tldrXiv** is a terminal utility 
