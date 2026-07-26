@@ -1,25 +1,25 @@
 <div align="center">
-
-![banner](docs/banner.svg)
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&pause=1000&repeat=false&color=B31B1B&center=true&width=435&lines=a+morning+coffee+companion)](https://git.io/typing-svg)
-
-[![PyPI](https://img.shields.io/pypi/v/tldrxiv?style=flat-square&color=B31B1B)](https://pypi.org/project/tldrxiv/)
-[![Python](https://img.shields.io/pypi/pyversions/tldrxiv?style=flat-square&color=B31B1B)](https://pypi.org/project/tldrxiv/)
-[![License](https://img.shields.io/github/license/PanosEconomou/tldrxiv?style=flat-square&color=B31B1B)](LICENCE)
-[![Dependencies](https://img.shields.io/badge/dependencies-none-B31B1B?style=flat-square)](pyproject.toml)
+ <div>
+  <img src="docs/banner.svg" alt="tldrXiv"/>
+ </div>
+ <div>
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&pause=1000&repeat=false&color=B31B1B&center=true&width=435&lines=a+morning+coffee+companion" alt="a morning coffee companion"/>
+ </div>
+ <div>
+  <img src="https://img.shields.io/pypi/v/tldrxiv?style=flat-square&color=B31B1B"                       href ="https://pypi.org/project/tldrxiv/" alt="PyPi"/>
+  <img src="https://img.shields.io/pypi/pyversions/tldrxiv?style=flat-square&color=B31B1B"              href ="https://pypi.org/project/tldrxiv/" alt="Python"/>
+  <img src="https://img.shields.io/github/license/PanosEconomou/tldrxiv?style=flat-square&color=B31B1B" href ="LICENCE"                           alt="License"/>
+  <img src="https://img.shields.io/badge/dependencies-none-B31B1B?style=flat-square"                    href ="pyproject.toml"                    alt="Depndencies"/>
+ </div>
 </div>
 
 > Reading 30-60 abstracts a day can be tiring! So why not have your computer work for it while you're sipping your morning coffee?
 
 **tldrXiv** is a terminal utility that fetches today's [arXiv](https://arxiv.org/) feeds and provides you with a summary related to **your research interests**, drawing connections, and highlighting interesting articles. Here it is!
 
-<div align="center> 
- 
- ![demo](docs/demo.gif) 
- 
- </div>
-
+ <div align="center">
+  <img src="docs/demo.gif" alt="tldrxiv demo" width="800">
+</div>
 
 ## Credits
 
