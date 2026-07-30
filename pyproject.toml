@@ -32,7 +32,7 @@ tldrxiv = "tldrxiv.cli:main"
 path = "src/tldrxiv/__init__.py"
 
 [tool.hatch.build.targets.sdist]
-include = ["src/tldrxiv", "README.md", "LICENCE", "pyproject.toml"]
+include = ["/src/tldrxiv", "/README.md", "/LICENCE", "/pyproject.toml"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/tldrxiv"]
