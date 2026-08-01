@@ -87,7 +87,7 @@ stateDiagram-v2
     md --> [*]
 ```
 
-The metadata (i.e. abstracts and titles) of today's arXiv announcement's are requested via ATOM and stored in `$XDG_CACHE_HOME/tldrxiv`. Then they are filtered according to the preferences set in the config file, and a single query is formed which is then submitted to the LLM (in this case the free tier of Gemini 3.6 flash). The response is then parsed, stored in `$SDG_DATA_HOME/tldrxiv`, and displayed. 
+The metadata (i.e. abstracts and titles) of today's arXiv announcement's are requested via ATOM and stored in `$XDG_CACHE_HOME/tldrxiv`. Then they are filtered according to the preferences set in the config file, and a single query is formed which is then submitted to the LLM (in this case the free tier of Gemini 3.6 flash). The response is then parsed, stored in `$XDG_DATA_HOME/tldrxiv`, and displayed. 
 
 > [!NOTE]
 > The individual article URLs and arXiv identifiers are removed before sending to the LLM, and are reintroduced once the response is received to make sure that the ai doesn't make them up (still always check them). The LLM only has access to titles and abstracts.  
